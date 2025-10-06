@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>图书收藏管理系统</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="container mt-4">
+  <!-- 页面标题与操作区 -->
+  <header class="mb-4">
+    <h1 class="text-center mb-3">我的图书收藏</h1>
+    <div class="d-flex justify-content-between align-items-center">
+      <a href="add-book.html" class="btn btn-success">添加新图书</a>
+      <a href="export.html" class="btn btn-info">导出图书清单</a>
+    </div>
+  </header>
+
+  <!-- 图书列表区域 -->
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h5 class="card-title">图书清单</h5>
+      <div id="bookList" class="table-responsive">
+        <table class="table table-hover">
+          <thead class="table-light">
+            <tr>
+              <th>书名</th>
+              <th>作者</th>
+              <th>ISBN</th>
+              <th>阅读状态</th>
+              <th>分类</th>
+              <th>添加时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="bookTableBody">
+            <!-- 图书数据将通过JavaScript动态生成 -->
+            <tr>
+              <td colspan="7" class="text-center text-muted">暂无图书数据，请点击"添加新图书"录入</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 引入数据存储模块并渲染列表 -->
+  <script type="module">
+    import { getAllBooks, deleteBook } from './js/data-storage.js';
+
+    // 渲染图书列表
+    function renderBookList() {
+      const books = getAllBooks();
+      const tableBody = document.getElementById('bookTableBody');
+      
+      // 清空现有内容
+      tableBody.innerHTML = '';
+      
+      // 若没有图书，显示提示
+      if (books.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="7" class="text-center text-muted">暂无图书数据，请点击"添加新图书"录入</td>
+          </tr>
+        `;
+        return;
+      }
+      
+      // 动态生成图书行
+      books.forEach(book => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${book.title}</td>
+          <td>${book.author}</td>
+          <td>${book.isbn}</td>
+          <td>
+            <span class="badge ${
+              book.status === '已读' ? 'bg-success' : 
+              book.status === '在读' ? 'bg-warning' : 'bg-secondary'
+            }">${book.status}</span>
+          </td>
+          <td>${book.category}</td>
+          <td>${book.addTime}</td>
+          <td>
+            <button class="btn btn-danger btn-sm delete-btn" data-isbn="${book.isbn}">删除</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+      
+      // 绑定删除按钮事件
+      document.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const isbn = e.target.getAttribute('data-isbn');
+          if (deleteBook(isbn)) {
+            // 删除成功后重新渲染列表
+            renderBookList();
+          }
+        });
+      });
+    }
+    
+    // 页面加载时渲染列表
+    window.onload = renderBookList;
+  </script>
+</body>
+</html>
