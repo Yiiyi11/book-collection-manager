@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Export Book List - Book Collection Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Export Book List</h2>
+    <a href="index.html" class="btn btn-secondary">Back to Book List</a>
+  </div>
+
+  <div class="card p-4 shadow-sm">
+    <h5 class="card-title mb-3">Export Options</h5>
+    <p class="text-muted mb-4">Export book data as a CSV file (compatible with Excel)</p>
+    
+    <!-- Export Range Selection -->
+    <div class="mb-3">
+      <label class="form-label">Export Range</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exportRange" id="exportAll" checked>
+        <label class="form-check-label" for="exportAll">
+          Export All Books
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="exportRange" id="exportFiltered">
+        <label class="form-check-label" for="exportFiltered">
+          Export Filtered Results Only (Access from the list page after filtering)
+        </label>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="exportFormat" class="form-label">Export Format</label>
+      <select id="exportFormat" class="form-select">
+        <option value="csv" selected>CSV (Comma-Separated Values, Recommended)</option>
+      </select>
+    </div>
+    
+    <button id="exportBtn" class="btn btn-primary">Start Export</button>
+    
+    <!-- Status Notification Area -->
+    <div id="exportStatus" class="mt-3 text-success d-none">
+      <strong>Export Successful!</strong> The file has been saved to your local downloads folder.
+    </div>
+    <!-- Error Notification Area -->
+    <div id="exportError" class="mt-3 text-danger d-none">
+      <strong>Export Failed:</strong> <span id="errorMessage"></span>
+    </div>
+  </div>
+
+  <!-- Import SheetJS Library (for CSV Export) -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <!-- Import Export Function Module -->
+  <script type="module">
+    import { initExportPage } from './js/export.js';
+    // Initialize Export Page
+    window.onload = initExportPage;
+  </script>
+</body>
+</html>
