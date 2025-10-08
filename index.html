@@ -24,6 +24,33 @@
       <a href="add-book.html" class="btn btn-success">添加新图书</a>
       <a href="export.html" class="btn btn-info">导出图书清单</a>
     </div>
+    <div class="card p-3 mb-4">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <input type="text" id="searchInput" class="form-control" placeholder="搜索书名或作者...">
+        </div>
+        <div class="col-md-3">
+          <select id="statusFilter" class="form-select">
+            <option value="">所有阅读状态</option>
+            <option value="已读">已读</option>
+            <option value="未读">未读</option>
+            <option value="在读">在读</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <select id="categoryFilter" class="form-select">
+            <option value="">所有分类</option>
+            <option value="文学">文学</option>
+            <option value="科幻">科幻</option>
+            <option value="历史">历史</option>
+            <option value="科普">科普</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button id="resetFilter" class="btn btn-outline-secondary w-100">重置筛选</button>
+        </div>
+      </div>
+    </div>
   </header>
 
   <!-- 图书列表区域 -->
