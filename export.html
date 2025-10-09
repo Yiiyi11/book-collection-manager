@@ -1,65 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Export Book List - Book Collection Management</title>
+  <title>导出图书清单 - 图书收藏管理</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body class="container mt-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Export Book List</h2>
-    <a href="index.html" class="btn btn-secondary">Back to Book List</a>
+    <h2>导出图书清单</h2>
+    <a href="index.html" class="btn btn-secondary">返回图书列表</a>
   </div>
 
   <div class="card p-4 shadow-sm">
-    <h5 class="card-title mb-3">Export Options</h5>
-    <p class="text-muted mb-4">Export book data as a CSV file (compatible with Excel)</p>
+    <h5 class="card-title mb-3">导出选项</h5>
+    <p class="text-muted mb-4">将图书数据导出为CSV文件（支持Excel打开）</p>
     
-    <!-- Export Range Selection -->
     <div class="mb-3">
-      <label class="form-label">Export Range</label>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="exportRange" id="exportAll" checked>
-        <label class="form-check-label" for="exportAll">
-          Export All Books
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="exportRange" id="exportFiltered">
-        <label class="form-check-label" for="exportFiltered">
-          Export Filtered Results Only (Access from the list page after filtering)
-        </label>
-      </div>
-    </div>
-
-    <div class="mb-3">
-      <label for="exportFormat" class="form-label">Export Format</label>
+      <label for="exportFormat" class="form-label">导出格式</label>
       <select id="exportFormat" class="form-select">
-        <option value="csv" selected>CSV (Comma-Separated Values, Recommended)</option>
+        <option value="csv" selected>CSV（逗号分隔，推荐）</option>
       </select>
     </div>
     
-    <button id="exportBtn" class="btn btn-primary">Start Export</button>
+    <button id="exportBtn" class="btn btn-primary">开始导出</button>
     
-    <!-- Status Notification Area -->
     <div id="exportStatus" class="mt-3 text-success d-none">
-      <strong>Export Successful!</strong> The file has been saved to your local downloads folder.
-    </div>
-    <!-- Error Notification Area -->
-    <div id="exportError" class="mt-3 text-danger d-none">
-      <strong>Export Failed:</strong> <span id="errorMessage"></span>
+      <strong>导出成功！</strong> 文件已保存到本地下载文件夹。
     </div>
   </div>
 
-  <!-- Import SheetJS Library (for CSV Export) -->
+  <!-- 引入SheetJS库（用于CSV导出） -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-  <!-- Import Export Function Module -->
+  <!-- 引入数据存储模块 -->
   <script type="module">
-    import { initExportPage } from './js/export.js';
-    // Initialize Export Page
-    window.onload = initExportPage;
+    import { getAllBooks } from './js/data-storage.js';
+
+    // 导出功能实现
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const books = getAllBooks();
+      
+      if (books.length === 0) {
+        alert("没有可导出的图书数据！");
+        return;
+      }
+      
+      // 准备导出数据（只包含需要的字段，调整顺序）
+      const exportData = books.map(book => ({
+        "书名": book.title,
+        "作者": book.author,
+        "ISBN": book.isbn,
+        "阅读状态": book.status,
+        "分类": book.category,
+        "添加时间": book.addTime
+      }));
+      
+      // 使用SheetJS生成CSV
+      const worksheet = XLSX.utils.json_to_sheet(exportData);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "图书清单");
+      
+      // 生成文件名（包含当前日期，如20250915_book_collection.csv）
+      const today = new Date().toISOString().split('T')[0].replace(/-/g, '');
+      const fileName = `${today}_book_collection.csv`;
+      
+      // 导出文件
+      XLSX.writeFile(workbook, fileName);
+      
+      // 显示成功提示
+      document.getElementById('exportStatus').classList.remove('d-none');
+      setTimeout(() => {
+        document.getElementById('exportStatus').classList.add('d-none');
+      }, 3000);
+    });
   </script>
 </body>
 </html>
