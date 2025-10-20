@@ -1,16 +1,16 @@
-# GitHub Pages部署指南
-## 前提条件
-- 所有代码已合并到main分支
-- 确保首页为index.html
+# GitHub Pages Deployment Guide
+## Prerequisites
+- All code has been merged into the main branch
+- Ensure the homepage is named index.html
 
-## 部署步骤
-1. 登录GitHub，进入仓库`book-collection-manager`
-2. 点击顶部“Settings”→左侧“Pages”
-3. 在“Build and deployment”→“Source”中选择：
+## Deployment Steps
+1. Log in to GitHub and navigate to the repository`book-collection-manager`
+2. Click "Settings" at the top → Select "Pages" on the left sidebar
+3. Under "Build and deployment" → "Source", make the following selections:
    - Source: "Deploy from a branch"
-   - Branch: "main"，文件夹选择"/ (root)"
-4. 点击“Save”，等待部署完成（约1-2分钟）
-5. 部署成功后，页面显示“Your site is live at https://github.com/Yiiyi11/book-collection-manager/”
+   - Branch: "main", and select "/ (root)" for the folder
+4. Click "Save" and wait for the deployment to complete (approximately 1-2 minutes)
+5. After successful deployment, the page will display"Your site is live at https://github.com/Yiiyi11/book-collection-manager/"
 
-## 访问地址
+## Access URL
 https://github.com/Yiiyi11/book-collection-manager/

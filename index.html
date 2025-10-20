@@ -139,6 +139,12 @@
         document.getElementById('categoryFilter').value = '';
         renderBookList(getAllBooks());
       });
+
+      // 添加storage事件监听
+      window.addEventListener('storage', () => {
+        // 重新加载并渲染书籍列表，保持当前筛选状态
+        applyFilters();
+      });
     };
   </script>
 </body>
