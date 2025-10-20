@@ -1,16 +1,12 @@
-
 # book-collection-manager
-ISYS3001 A2 - Small Book Collection Management Web App (No Firebase)
-
-# book-collection-manager
-ISYS3001 A2 - Small Book Collection Management Web App (No Firebase)
+ISYS3001 A2 - Small Book Collection Management Web App
 
 # Small-Scale Book Collection Management Web Application
 ## Project Background
-This project is Assignment A2 for the ISYS3001 course. It aims to develop a web application that supports book information management, featuring functions such as book entry, search and filtering, and CSV export (Firebase is not used; localStorage is adopted for local storage).
+It aims to develop a web application that supports book information management, featuring functions such as book entry, search and filtering, and CSV export.
 ## Technology Stack
 - Frontend: HTML5 + CSS3 + JavaScript + Bootstrap 5 (responsive layout)
-- Data Storage: localStorage (browser local storage, no backend/third-party services required)
+- Data Storage: books.json
 - Export Function: SheetJS (xlsx.js, generates CSV files on the frontend)
 - Version Control: Git + GitHub (branch management and code hosting)
 - Local Preview: VS Code Live Server extension
@@ -21,16 +17,9 @@ This project is Assignment A2 for the ISYS3001 course. It aims to develop a web 
 ## Development Cycle
 
 Weeks 1-5 (September 7 - October 6, 2025)
-
 ## Deployment Information
 - Online access address: https://github.com/Yiiyi11/book-collection-manager
 - Deployment method: GitHub Pages (automatic deployment based on the main branch)
-
-Weeks 1-5 (September 7 - October 6, 2025)
-## Deployment Information
-- Online access address: https://github.com/Yiiyi11/book-collection-manager
-- Deployment method: GitHub Pages (automatic deployment based on the main branch)
-
 
 ## Usage Guide
 1. Go to the homepage and click "Add New Book" to enter information (ISBN cannot be repeated)
