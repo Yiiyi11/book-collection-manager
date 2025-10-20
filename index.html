@@ -109,42 +109,43 @@
       });
 
       document.querySelectorAll('.delete-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.addEventListener('click', async (e) => {
           const isbn = e.target.getAttribute('data-isbn');
-          if (deleteBook(isbn)) {
+          if (await deleteBook(isbn)) {  // 假设deleteBook也是异步函数，这里一并处理
             applyFilters();
           }
         });
       });
     }
 
-    function applyFilters() {
+    async function applyFilters() {
       const searchTerm = document.getElementById('searchInput').value.trim();
       const statusFilter = document.getElementById('statusFilter').value;
       const categoryFilter = document.getElementById('categoryFilter').value;
       
-      const filteredBooks = filterBooks(searchTerm, statusFilter, categoryFilter);
+      const allBooks = await getAllBooks();  // 等待获取所有书籍
+      const filteredBooks = filterBooks(allBooks, searchTerm, statusFilter, categoryFilter);
       renderBookList(filteredBooks);
     }
     
-    window.onload = () => {
-      renderBookList(getAllBooks());
+    window.onload = async () => {  // 使用async函数
+      // 初始加载时获取并渲染所有书籍
+      const allBooks = await getAllBooks();
+      renderBookList(allBooks);
       
       document.getElementById('searchInput').addEventListener('input', applyFilters);
       document.getElementById('statusFilter').addEventListener('change', applyFilters);
       document.getElementById('categoryFilter').addEventListener('change', applyFilters);
-      document.getElementById('resetFilter').addEventListener('click', () => {
+      document.getElementById('resetFilter').addEventListener('click', async () => {
         document.getElementById('searchInput').value = '';
         document.getElementById('statusFilter').value = '';
         document.getElementById('categoryFilter').value = '';
-        renderBookList(getAllBooks());
+        const allBooks = await getAllBooks();  // 重新获取所有书籍
+        renderBookList(allBooks);
       });
 
       // 添加storage事件监听
-      window.addEventListener('storage', () => {
-        // 重新加载并渲染书籍列表，保持当前筛选状态
-        applyFilters();
-      });
+      window.addEventListener('storage', applyFilters);
     };
   </script>
 </body>
