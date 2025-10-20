@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1760938519689",
+    "title": "The Romance of the Three Kingdoms",
+    "author": "Luo Guanzhong",
+    "isbn": "9787506365434",
+    "status": "Read",
+    "category": "Literature",
+    "addTime": "2025-10-20T05:35:19.689Z"
+  },
+  {
+    "id": "1760939396953",
+    "title": "The Dream of Red Mansion",
+    "author": "Cao Xueqin",
+    "isbn": "9787506365435",
+    "status": "Unread",
+    "category": "Literature",
+    "addTime": "2025-10-20T05:49:56.953Z"
+  },
+  {
+    "id": "1760939421773",
+    "title": "Journey to the West",
+    "author": "Wu Chengen",
+    "isbn": "9787506365436",
+    "status": "Reading",
+    "category": "Literature",
+    "addTime": "2025-10-20T05:50:21.773Z"
+  }
+]
